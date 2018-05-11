@@ -1,6 +1,6 @@
 ﻿namespace SubtitleEditor
 {
-    partial class Form1
+    partial class SelectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // SelectForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(544, 279);
+            this.Name = "SelectForm";
+            this.Text = "SelectForm";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-
