@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using SubtitlesParser;
 using System.IO;
 
+
+//TODO: Fix crash when closing save file dialogs after clicking new file, with X instead of cancel
+
 namespace SubtitleEditor
 {
     public struct Timestamp
@@ -278,9 +281,10 @@ namespace SubtitleEditor
             }
 
             //textBox.Text = str.ToString();
-            byte[] bytes = Encoding.Default.GetBytes(str.ToString());
-            string real = Encoding.UTF8.GetString(bytes);
-            textBox.Text = real;
+            //byte[] bytes = Encoding.Default.GetBytes(str.ToString());
+            //string real = Encoding.UTF8.GetString(bytes);
+            //textBox.Text = real;
+            textBox.Text = str.ToString();
 
             indexSelector.Value = index + 1;
         }
@@ -312,7 +316,7 @@ namespace SubtitleEditor
         private void LoadFromFile(string path)
         {
             Stream fs = File.OpenRead(path);
-            List = Parser.ParseStream(fs, ASCIIEncoding.Default);
+            List = Parser.ParseStream(fs, Encoding.Default);
             fs.Close();
         }
 

@@ -14,7 +14,7 @@ namespace SubtitleEditor
         private MainForm MainForm;
 
 
-        private void Backwards_Click(object sender, EventArgs e)
+        private void ApplyOffset(bool forwards)
         {
             int start = (int)startNode.Value - 1;
             int end = (int)endNode.Value - 1;
@@ -22,8 +22,16 @@ namespace SubtitleEditor
             {
                 for (int i = start; i <= end; i++)
                 {
-                    MainForm.List[i].StartTime -= MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
-                    MainForm.List[i].EndTime -= MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
+                    if (forwards)
+                    {
+                        MainForm.List[i].StartTime += MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
+                        MainForm.List[i].EndTime += MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
+                    }
+                    else
+                    {
+                        MainForm.List[i].StartTime -= MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
+                        MainForm.List[i].EndTime -= MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
+                    }
                 }
                 this.Close();
             }
@@ -33,24 +41,14 @@ namespace SubtitleEditor
             }
         }
 
+        private void Backwards_Click(object sender, EventArgs e)
+        {
+            ApplyOffset(false);
+        }
+
         private void Forwards_Click(object sender, EventArgs e)
         {
-            int start = (int)startNode.Value - 1;
-            int end = (int)endNode.Value - 1;
-
-            if ((start < end) && (start < MainForm.List.Count) && (end < MainForm.List.Count))
-            {
-                for (int i = start; i <= end; i++)
-                {
-                    MainForm.List[i].StartTime += MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
-                    MainForm.List[i].EndTime += MainForm.MillisecondsFromTimestamp(new Timestamp(startHours.Value, startMinutes.Value, startSeconds.Value, startMilliseconds.Value));
-                }
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Invalid node selection");
-            }
+            ApplyOffset(true);
         }
 
         public OffsetForm(MainForm mainform)
